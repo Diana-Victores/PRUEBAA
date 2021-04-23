@@ -1,0 +1,50 @@
+private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+
+        if (txtUsuario.getText().trim().isEmpty() || txtContraseña.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "NO PUEDEN HABER CAMPOS VACIOS", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+
+                //viene de Uusuario y UsuarioDAO ...
+                
+                seguridad.dominio.Usuario usuarioAConsultar = new seguridad.dominio.Usuario();
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                usuarioAConsultar.setId_usuario(Integer.parseInt(txtUsuario.getText()));
+                
+                System.out.println(usuarioAConsultar.toString());
+                // Recuperación de información a través de otro objeto
+                usuarioAConsultar = usuarioDAO.query(usuarioAConsultar);
+                System.out.println("regresa " + usuarioAConsultar.toString());
+                
+                 System.out.println("regresa contraseña " + txtContraseña.getText());
+                 
+                  System.out.println("regresa objeto contraseña " + usuarioAConsultar.getPassword_usuario());
+                  
+                   System.out.println("regresa usuario " + txtUsuario.getText());
+                   
+                   System.out.println("regresa objeto usuario " + usuarioAConsultar.getId_usuario());
+                 
+                   
+                if (txtContraseña.getText().equals(usuarioAConsultar.getPassword_usuario()) && txtUsuario.getText().equals(usuarioAConsultar.getId_usuario())) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido\n", "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
+                    
+                   
+                     
+                    MDI_Components menuGeneral = new  MDI_Components();
+                  //  menuGeneral.setVisible(true);
+                    this.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO O CONTRASEÑA", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtContraseña.setText("");
+                    txtUsuario.setText("");
+                }
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO O CONTRASEÑA", "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtContraseña.setText("");
+                txtUsuario.setText("");
+            }
+        }
+
+    }          
